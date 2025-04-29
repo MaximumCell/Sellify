@@ -1,0 +1,27 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules
+pnpm-lock.yaml
+yarn.lock
+
+# Optional build output directory
+dist
+build
+
+# Environment variables
+.env
+
+# IDE and OS generated files
+.DS_Store
+Thumbs.db
+.idea
+*.iml
+.project
+.vscode/
