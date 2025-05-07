@@ -61,7 +61,18 @@ export const signup = async (req, res) => {
       message: "User signed up successfully",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    if (error.name === 'ValidationError') {
+      // Extract the specific error message for the 'password' field
+      const passwordError = error.errors.password?.message;
+      if (passwordError) {
+        return res.status(400).json({ message: passwordError });
+      }
+      // If there are other validation errors, you can handle them here as well
+      const firstErrorKey = Object.keys(error.errors)[0];
+      return res.status(400).json({ message: error.errors[firstErrorKey].message });
+    }
+    // For other types of errors (e.g., database connection), send a generic message
+    res.status(500).json({ message: "Something went wrong during signup" });
   }
 };
 
@@ -147,7 +158,7 @@ export const refreshToken = async (req, res) => {
 
 export const profile = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const userId = req.user;
     const user = await User.findById(userId).select("-password");
     if (!user) {
       res.status(404).json({ message: "User not found" });
