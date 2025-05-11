@@ -1,4 +1,4 @@
-import Product from "../models/product.model.js";
+import Order from "../models/order.model.js";
 import User from "../models/user.model.js";
 
 
@@ -30,14 +30,14 @@ export const analyticsController = async (req, res) => {
 
 const getAnalyticsData = async () => {
     const totalUsers = await User.countDocuments({});
-    const totalProducts = await Product.countDocuments({});
+    const totalProducts = await Order.countDocuments({});
 
-    const salesData = await Product.aggregate([
+    const salesData = await Order.aggregate([
         {
             $group: {
                 _id: null,
                 totalSales: { $sum:1 },
-                totalRevenue: { $sum: { $multiply: ["$totalAmount"] } }
+                totalRevenue: { $sum: "$totalAmount" },
             }
         }
     ]);
@@ -52,7 +52,7 @@ const getAnalyticsData = async () => {
 }
 
 const getDailySalesData = async (startDate, endDate) => {
-    const dailySalesData = await Product.aggregate([
+    const dailySalesData = await Order.aggregate([
         {
             $match: {
                 createdAt: {

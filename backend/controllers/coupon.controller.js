@@ -8,7 +8,7 @@ export const getCoupons = async (req, res) => {
     });
     res.status(200).json({
       success: true,
-      coupons: coupons ? coupons.coupons : null,
+      coupons: coupons ? coupons : null,
     });
   } catch (error) {
     console.error(error);

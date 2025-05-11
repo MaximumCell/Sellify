@@ -131,7 +131,7 @@ export const deleteProduct = async (req, res) => {
 export const getRecommendedProducts = async (req, res) => {
   try {
     const products = await Product.aggregate([
-      { $sample: { size: 3 } }, // get 3 random products
+      { $sample: { size: 4 } }, // get 4 random products
       {
         $project: {
           _id: 1,

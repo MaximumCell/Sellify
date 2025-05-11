@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Lock, LogIn, LogOut, ShoppingCart, UserPlus } from "lucide-react";
 import { useUserStore } from "../stores/useUserStore";
+import { useCartStore } from "../stores/useCartStore";
 const Navbar = () => {
   const { user, logout } = useUserStore();
   const isAdmin = user?.role === "admin";
+  const {cart} = useCartStore();
   return (
     <header className="fixed top-0 left-0 w-full z-40 bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg transition-all duration-300 border-emerald-800">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center flex-wrap">
@@ -30,9 +32,9 @@ const Navbar = () => {
                 size={20}
               />
               <span className="hidden sm:inline-block">Cart</span>
-              <span className="absolute -top-2 -left-2 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5 group-hover:bg-emerald-400 transition duration-300 ease-in-out">
-                3
-              </span>
+              {cart?.length > 0 && (<span className="absolute -top-2 -left-2 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5 group-hover:bg-emerald-400 transition duration-300 ease-in-out">
+                {cart.length}
+              </span>)}
             </Link>
           )}
           {isAdmin && (
