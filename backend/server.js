@@ -22,10 +22,12 @@ const __dirname = path.resolve();
 
 app.use(express.json({limit: "10mb"}));
 app.use(cookieParser());
-const allowedOrigin = process.env.NODE_ENV === 'production'
-                      ? process.env.FRONTEND_URL 
-                      : "http://localhost:5173";
-
+const allowedOrigin = process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : "http://localhost:5173";
+const corsOptions = {
+  origin: allowedOrigin, // Set the origin dynamically
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+};
 console.log(`CORS allowing origin: ${allowedOrigin}`);
 
 app.use(cors(corsOptions));
