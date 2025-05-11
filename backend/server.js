@@ -22,7 +22,13 @@ const __dirname = path.resolve();
 
 app.use(express.json({limit: "10mb"}));
 app.use(cookieParser());
+const corsOptions = {
+  origin: '*', // <-- This allows requests from any origin
+  credentials: true, // Keep this if you need to send cookies/auth headers
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+};
 
+app.use(cors(corsOptions));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes)
